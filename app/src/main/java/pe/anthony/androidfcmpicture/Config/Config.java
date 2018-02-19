@@ -7,4 +7,5 @@ package pe.anthony.androidfcmpicture.Config;
 public class Config {
     public static  String message ="";
     public static  String title ="";
+    public static  String imageLink ="";
 }

@@ -3,8 +3,10 @@ package pe.anthony.androidfcmpicture.Helper;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -13,6 +15,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 
 import pe.anthony.androidfcmpicture.Config.Config;
+import pe.anthony.androidfcmpicture.Display;
 import pe.anthony.androidfcmpicture.R;
 
 /**
@@ -51,12 +54,16 @@ public class NotificationHelper extends ContextWrapper{
       Notification.Style style = new  Notification.BigPictureStyle().bigPicture(bitmap);
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Intent intent = new Intent(getApplicationContext(), Display.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
 
         return new Notification.Builder(getApplicationContext(),ANTHO_ID)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle(Config.title)
                 .setAutoCancel(true)
                 .setSound(defaultSound)
+                .setContentIntent(pendingIntent)
                 .setStyle(style);
     }
 }

@@ -3,7 +3,9 @@ package pe.anthony.androidfcmpicture.FirebaseService;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
@@ -21,6 +23,7 @@ import com.squareup.picasso.Target;
 import java.util.logging.Handler;
 
 import pe.anthony.androidfcmpicture.Config.Config;
+import pe.anthony.androidfcmpicture.Display;
 import pe.anthony.androidfcmpicture.Helper.NotificationHelper;
 import pe.anthony.androidfcmpicture.R;
 
@@ -64,11 +67,17 @@ public class MyFirebaseMessasingService extends FirebaseMessagingService {
         style.setSummaryText(Config.message);
         style.bigPicture(bitmap);
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        Intent intent = new Intent(getApplicationContext(), Display.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP );
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
+
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder)new NotificationCompat.Builder(getApplicationContext())
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle(Config.title)
                 .setAutoCancel(true)
                 .setSound(defaultSound)
+                .setContentIntent(pendingIntent)
                 .setStyle(style);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0,notificationBuilder.build());
@@ -86,6 +95,9 @@ public class MyFirebaseMessasingService extends FirebaseMessagingService {
         Config.title = remoteMessage.getNotification().getTitle();
         //Crea un hilo para guardar la imagen de notificacion
         if(remoteMessage.getData() != null){
+            /*Esto es para guardar la imagen*/
+            Config.imageLink = remoteMessage.getData().get("image");
+            /**/
             android.os.Handler uiHandler = new android.os.Handler(Looper.getMainLooper());
             uiHandler.post(new Runnable() {
                 @Override

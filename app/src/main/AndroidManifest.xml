@@ -17,10 +17,9 @@
             </intent-filter>
         </activity>
         <!-- Firebase Notifications -->
-        <service
-            android:name=".FirebaseService.MyFirebaseService">
+        <service android:name=".FirebaseService.MyFirebaseService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <service
@@ -28,9 +27,11 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".Display"></activity>
     </application>
 
 </manifest>
