@@ -55,7 +55,7 @@ public class NotificationHelper extends ContextWrapper{
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Intent intent = new Intent(getApplicationContext(), Display.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK );
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
 
         return new Notification.Builder(getApplicationContext(),ANTHO_ID)
